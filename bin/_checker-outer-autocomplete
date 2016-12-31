@@ -1,2 +1,11 @@
-#! /usr/bin/env node
-require('../').listPkgs()
+#!/usr/bin/env bash
+
+function _pkgjsondeps() {
+  local path='./package.json'
+  if [ ! -e $path ]; then
+  path="$(npm root)/../package.json"
+  fi
+  jq -r '.dependencies | keys | join("\n")' $path 2>/dev/null
+}
+
+_pkgjsondeps
